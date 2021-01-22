@@ -2,6 +2,7 @@ const express = require("express");
 
 const authMiddleware = require("./middleware/authorization");
 const uploadQuestions = require("./middleware/uploadQuestions");
+const uploadImage = require("./services/firebase")
 
 const studentController = require("./controllers/students");
 const questionController = require("./controllers/questions");
@@ -33,6 +34,7 @@ routes.put("/students/:id", studentController.update);
 //rotas de perguntas
 routes.post("/questions",
   uploadQuestions,
+  uploadImage,
   questionValidators.create,
   questionController.store
 );
