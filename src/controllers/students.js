@@ -1,7 +1,6 @@
 const Student = require("../models/Student");
 const bcrypt = require("bcryptjs");
-const jwt = require("jsonwebtoken");
-const auth = require("../config/auth.json");
+const { generateToken } = require("../utils");
 
 module.exports = {
     //função que vai ser executada pela rota
@@ -60,7 +59,8 @@ module.exports = {
 
             student = await Student.create({ ra, name, email, password: passwordCript });
 
-            const token = jwt.sign({ studentId: student.id, studentName: student.name }, auth.secret);
+            const token = generateToken ({ studentId: student.id, studentName: student.name });
+
 
             //retornar resposta de sucesso
             res.status(201).send({

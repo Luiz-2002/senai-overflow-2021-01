@@ -2,7 +2,7 @@ var admin = require("firebase-admin");
 
 var serviceAccount = require("../config/firebase-key.json");
 
-const BUCKET = "gs://senai-overflow-2021-01-db7bf.appspot.com";
+const BUCKET = "senai-overflow-2021-01-db7bf.appspot.com";
 
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
@@ -26,8 +26,10 @@ const uploadImage = (req, res, next) => {
         },
     });
 
-    stream.on("error", ()=> {
-        console.error(e);
+    stream.on("error", (error)=> {
+        console.error(error);
+
+        res.status(404).send({error: "erro ao subir para o firebase"});
     });
 
     stream.on("finish", () => {

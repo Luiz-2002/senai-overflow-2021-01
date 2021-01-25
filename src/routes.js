@@ -2,7 +2,7 @@ const express = require("express");
 
 const authMiddleware = require("./middleware/authorization");
 const uploadQuestions = require("./middleware/uploadQuestions");
-const uploadImage = require("./services/firebase")
+const uploadImage = require("./services/firebase");
 
 const studentController = require("./controllers/students");
 const questionController = require("./controllers/questions");

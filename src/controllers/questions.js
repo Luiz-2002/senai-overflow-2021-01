@@ -7,9 +7,12 @@ module.exports = {
     },
 
     async store(req, res) {
-        const { title, description, image, gist, categories } = req.body;
 
-        const categoriesArray = categories.split(",")
+        const {firebaseUrl} = req.file ? req.file: ""; 
+
+        const { title, description, gist, categories } = req.body;
+
+        const categoriesArray = categories.split(",");
 
         const { studentId } = req;
 
@@ -22,7 +25,7 @@ module.exports = {
                 return res.status(404).send({ error: "Aluno não encontrado" });
 
             //crio a pergunta para o aluno
-            let question = await student.createQuestion({ title, description, image, gist });
+            let question = await student.createQuestion({ title, description, image:req.file.firebaseUrl, gist });
 
             await question.addCategories(categoriesArray);
 
@@ -33,8 +36,7 @@ module.exports = {
                 description: question.description,
                 created_at: question.created_at,
                 gist: question.gist,
-                image: `http://localhost:3333/${req.file.path}`,
-                
+                image: req.file.firebaseUrl
             });
 
         } catch (error) {
