@@ -1,6 +1,6 @@
 const Multer = require("multer");
 
-const uploadQuestions = Multer({
+const uploadSingleImage = Multer({
   storage: Multer.memoryStorage(),
   fileFilter: (req, file, callback) => {
     let allowedTypes = ["image/png", "image/jpeg"];
@@ -8,7 +8,7 @@ const uploadQuestions = Multer({
     if (allowedTypes.includes(file.mimetype)) {
       callback(null, true);
     } else {
-      callback(new Error("Tipo do arquivo inválido"));
+      callback(new Error("tipo do arquivo inválido"));
     }
   },
   limits: {
@@ -16,4 +16,4 @@ const uploadQuestions = Multer({
   },
 });
 
-module.exports = uploadQuestions.single("image");
+module.exports = uploadSingleImage.single("image");

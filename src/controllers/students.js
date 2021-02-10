@@ -59,8 +59,10 @@ module.exports = {
 
             student = await Student.create({ ra, name, email, password: passwordCript });
 
-            const token = generateToken ({ studentId: student.id, studentName: student.name });
-
+            const token = generateToken({
+                studentId: student.id, 
+                studentName: student.name
+            });
 
             //retornar resposta de sucesso
             res.status(201).send({
