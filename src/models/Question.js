@@ -17,7 +17,7 @@ class Question extends Model {
 
     static associate(models) {
         this.belongsTo(models.Student);
-        this.belongsToMany(models.Category, { through: "question_categories" });
+        this.belongsToMany(models.Category, { through: "question_category" });
         this.hasMany(models.Answer);
     }
 }

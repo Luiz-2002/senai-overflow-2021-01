@@ -5,11 +5,9 @@ module.exports = {
   index(req, res) {},
 
   async store(req, res) {
-    const { firebaseUrl } = req.file ? req.file : "";
-
     const { title, description, gist, categories } = req.body;
 
-    const categoriesArray = categories.split(",");
+    const categoriesArr = categories.split(",");
 
     const { studentId } = req;
 
@@ -29,7 +27,7 @@ module.exports = {
         gist,
       });
 
-      await question.addCategories(categoriesArray);
+      await question.addCategories(categoriesArr);
 
       //retorno sucesso
       res.status(201).send({
@@ -61,7 +59,7 @@ module.exports = {
       if (!question)
         return res.status(404).send({ error: "Questão não encontrada" });
 
-      if (question.StudentId != studentId)
+      if (question.student_id != studentId)
         return res.status(401).send({ error: "Não autorizado" });
 
       question.title = title;

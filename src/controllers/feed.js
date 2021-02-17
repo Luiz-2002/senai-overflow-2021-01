@@ -1,8 +1,13 @@
+const { index } = require("./questions");
 const Question = require("../models/Question");
 
 module.exports = {
   async index(req, res) {
+    const { page } = req.questy;
+
     try {
+      const totalQuestion = await Question.count();
+
       const feed = await Question.findAll({
         attributes: [
           "id",
@@ -11,6 +16,7 @@ module.exports = {
           "image",
           "gist",
           "created_at",
+          "StudentId",
         ],
         include: [
           {
@@ -32,7 +38,10 @@ module.exports = {
           },
         ],
         order: [["created_at", "DESC"]],
+        limit: page ? [(page - 1) * 5, 5] : undefined,
       });
+
+      res.header("X-Total-Count", totalQuestion);
 
       res.send(feed);
     } catch (error) {

@@ -2,36 +2,30 @@
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    queryInterface.createTable("questions",{
+    //aqui dizemos o que deve ser feito
+
+    queryInterface.createTable("students", {
       id: {
         type: Sequelize.INTEGER,
         primaryKey: true,
         autoIncrement: true
       },
-      title: {
+      ra: {
+        type: Sequelize.STRING,
+        allowNull: false,
+        unique: true
+      },
+      name: {
         type: Sequelize.STRING,
         allowNull: false,
       },
-      description: {
+      email: {
         type: Sequelize.STRING,
         allowNull: false,
       },
-      image: {
+      password: {
         type: Sequelize.STRING,
-        allowNull: true,
-      },
-      gist: {
-        type: Sequelize.STRING,
-        allowNull: true,
-      },
-      student_id: {
-        type: Sequelize.INTEGER,
-        references: {
-          model: "students",
-          key: "id"
-        },
-        onUpdate: "CASCADE",
-        onDelete: "CASCADE"
+        allowNull: false,
       },
       created_at: {
         type: Sequelize.DATE,
@@ -45,6 +39,8 @@ module.exports = {
   },
 
   down: async (queryInterface, Sequelize) => {
-    queryInterface.dropTable("questions");
+    //aqui dizemos o que deve ser desfeito
+
+    queryInterface.dropTable("students");
   }
 };

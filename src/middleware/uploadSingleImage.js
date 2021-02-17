@@ -8,7 +8,7 @@ const uploadSingleImage = Multer({
     if (allowedTypes.includes(file.mimetype)) {
       callback(null, true);
     } else {
-      callback(new Error("tipo do arquivo inválido"));
+      callback(new Error("Tipo do arquivo inválido"));
     }
   },
   limits: {

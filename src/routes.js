@@ -2,12 +2,11 @@ const express = require("express");
 
 const authMiddleware = require("./middleware/authorization");
 const uploadSingleImage = require("./middleware/uploadSingleImage");
-const uploadFirebase = require("./services/uploadFirebase");
 
 const studentController = require("./controllers/students");
 const studentImagesController = require("./controllers/studentImages");
 const questionController = require("./controllers/questions");
-const answersController = require("./controllers/answer");
+const answerController = require("./controllers/answers");
 const feedController = require("./controllers/feed");
 const sessionController = require("./controllers/sessions");
 const categoriesController = require("./controllers/categories");
@@ -15,42 +14,23 @@ const categoriesController = require("./controllers/categories");
 const studentValidators = require("./validators/students");
 const questionValidators = require("./validators/questions");
 const answerValidators = require("./validators/answers");
+const uploadFirebase = require("./services/uploadFirebase");
 
 const routes = express.Router();
 
-// const upload = multer.single("arquivo");
-
-// routes.post("/upload", (req, res) => {
-
-//     const handleError = (error) => {
-//         if (error) {
-//             res.status(400).send({ error: "Arquivo Inválido" });
-//         }
-
-//         console.log(req.file);
-
-//         res.send(req.file);
-//     }
-
-//     upload(req, res, handleError);
-// });
-
-//Rotas públicas
+//rotas públicas
 routes.post("/sessions", sessionController.store);
-
 routes.post("/students", studentValidators.create, studentController.store);
 
 routes.use(authMiddleware);
 
-//Rotas de Alunos
+//rotas privadas
+
+//rotas de alunos
 routes.get("/students", studentController.index);
-
 routes.get("/students/:id", studentController.find);
-
 routes.delete("/students/:id", studentController.delete);
-
 routes.put("/students/:id", studentController.update);
-
 routes.post(
   "/students/:id/images",
   uploadSingleImage,
@@ -58,7 +38,7 @@ routes.post(
   studentImagesController.store
 );
 
-//Rotas de Perguntas
+//rotas de perguntas
 routes.post(
   "/questions",
   uploadSingleImage,
@@ -66,25 +46,20 @@ routes.post(
   questionValidators.create,
   questionController.store
 );
-
+routes.delete("/questions/:id", questionController.delete);
 routes.put("/questions/:id", questionController.update);
 
-routes.delete("/questions/:id", questionController.delete);
-
-//Rotas de Respostas
-
+//rotas de respostas
 routes.post(
   "/questions/:id/answers",
   answerValidators.create,
-  answersController.store
+  answerController.store
 );
 
-//Rotas do feed
-
+//rotas do feed
 routes.get("/feed", feedController.index);
 
-//Rotas de Categorias
-
+//rotas de categorias
 routes.get("/categories", categoriesController.index);
 
 module.exports = routes;

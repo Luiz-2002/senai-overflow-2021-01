@@ -2,19 +2,19 @@
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    queryInterface.createTable("categories",{
+    queryInterface.createTable("categories", {
       id: {
         type: Sequelize.INTEGER,
         primaryKey: true,
         autoIncrement: true
       },
-      description:{
+      description: {
         type: Sequelize.STRING,
-        allowNull:false
+        allowNull: false
       },
-      created_at:{
+      created_at: {
         type: Sequelize.DATE,
-        allowNull:false
+        allowNull: false,
       },
       updated_at: {
         type: Sequelize.DATE,
@@ -24,7 +24,6 @@ module.exports = {
   },
 
   down: async (queryInterface, Sequelize) => {
-      //aqui dizemos o que deve ser desfeito
-      queryInterface.dropTable("categories");
+    queryInterface.dropTable("categories");
   }
 };
