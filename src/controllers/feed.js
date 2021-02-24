@@ -3,7 +3,7 @@ const Question = require("../models/Question");
 
 module.exports = {
   async index(req, res) {
-    const { page } = req.questy;
+    const { page } = req.query;
 
     try {
       const totalQuestion = await Question.count();
@@ -42,8 +42,11 @@ module.exports = {
       });
 
       res.header("X-Total-Count", totalQuestion);
+      res.header("Access-Control-Expose-Headers", "X-Total-Count");
 
-      res.send(feed);
+      setTimeout(() => {
+        res.send(feed);
+      }, 1000);
     } catch (error) {
       console.log(error);
       res.status(500).send(error);
